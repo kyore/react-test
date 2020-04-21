@@ -3,48 +3,24 @@ body {
     margin: 20px;
 }
 
-ol, ul {
-    padding-left: 30px;
+
+.FilterableProductTable {
+    padding: 5px;
+    width: 250px;
+    border: 1px solid orange;
 }
 
-.board-row:after {
-    clear: both;
-    content: "";
-    display: table;
+.SearchBar {
+    padding: 15px;
+    border: 1px solid blue;
 }
 
-.status {
-    margin-bottom: 10px;
+.ProductTable {
+    margin-top: 5px;
+    padding: 5px 0;
+    border: 1px solid green;
 }
 
-.square {
-    background: #fff;
-    border: 1px solid #999;
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 34px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 34px;
-}
-
-.square:focus {
-    outline: none;
-}
-
-.kbd-navigation .square:focus {
-    background: #ddd;
-}
-
-.game {
-    display: flex;
-    flex-direction: row;
-}
-
-.game-info {
-    margin-left: 20px;
+.ProductCategoryRow {
+    border: 1px solid turquoise;
 }
