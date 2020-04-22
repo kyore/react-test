@@ -3,24 +3,12 @@ body {
     margin: 20px;
 }
 
-
-.FilterableProductTable {
-    padding: 5px;
-    width: 250px;
-    border: 1px solid orange;
+.red {
+    color: red;
 }
 
-.SearchBar {
-    padding: 15px;
-    border: 1px solid blue;
+
+.blue {
+    color: blue;
 }
 
-.ProductTable {
-    margin-top: 5px;
-    padding: 5px 0;
-    border: 1px solid green;
-}
-
-.ProductCategoryRow {
-    border: 1px solid turquoise;
-}
