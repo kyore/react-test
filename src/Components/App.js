@@ -16,6 +16,15 @@ export default class App extends React.Component {
         this.onFormSubmit = this.onFormSubmit.bind(this);
         this.onCompleteAll = this.onCompleteAll.bind(this);
         this.onFilterButtonClicked = this.onFilterButtonClicked.bind(this);
+        this.onItemInputChecked = this.onItemInputChecked.bind(this);
+    }
+
+    onItemInputChecked(value, item_id) {
+        this.setState(state => ({
+            items: state.items.map(item => item.id === item_id ? {...item, completed: value} : item),
+            text: state.text,
+            show: state.show
+        }))
     }
 
 
@@ -63,8 +72,16 @@ export default class App extends React.Component {
                     onFormSubmit={this.onFormSubmit}
                     onCompleteAll={this.onCompleteAll}
                 />
-                <Todo items={this.state.items} show={this.state.show}/>
-                <FilterRow onFilterButtonClicked={this.onFilterButtonClicked}/>
+                <Todo
+                    items={this.state.items}
+                    show={this.state.show}
+                    onRowChecked={this.onItemInputChecked}
+                />
+                <FilterRow
+                    itemCount={this.state.items.length}
+                    onFilterButtonClicked={this.onFilterButtonClicked}
+                    currentFilter={this.state.show}
+                />
             </div>
         )
     }

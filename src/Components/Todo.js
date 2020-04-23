@@ -1,17 +1,30 @@
 import React from "react";
 
-function TodoItem(props) {
-    const text = props.item.text;
-    const item = props.item.completed ? <s>{text}</s> : <span>{text}</span>;
+class TodoItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleItemChecked = this.handleItemChecked.bind(this);
+    }
 
-    return (
-        <li>
-            <label>
-                <input type="checkbox" value={props.value}/>
-            </label>
-            {item}
-        </li>
-    )
+    handleItemChecked(e) {
+        this.props.onItemChecked(e.target.checked, this.props.item.id)
+    }
+
+    render() {
+        const text = this.props.item.text;
+        const item = this.props.item.completed ? <s>{text}</s> : <span>{text}</span>;
+
+        return (
+            <li>
+                <label>
+                    <input type="checkbox"
+                           checked={this.props.item.completed}
+                           onChange={this.handleItemChecked}/>
+                </label>
+                {item}
+            </li>
+        )
+    }
 }
 
 
@@ -20,7 +33,6 @@ class Todo extends React.Component {
         const items = this.props.items;
         const show = this.props.show;
         const rows = [];
-
 
         const newItems = items.filter(item => {
             if (show === 'completed') {
@@ -33,7 +45,7 @@ class Todo extends React.Component {
 
         newItems.forEach(item => {
             rows.push(
-                <TodoItem key={item.id} item={item}/>
+                <TodoItem key={item.id} item={item} onItemChecked={this.props.onRowChecked}/>
             )
         });
 
