@@ -1,12 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import App from "./Components/App";
 
 import * as serviceWorker from './serviceWorker';
 
 
+function Example() {
+    const [count, setCount] = useState(0);
+
+    function handleCount() {
+        setCount(count + 1)
+    }
+
+    return (
+        <div>
+            <h6>Count is: {count}</h6>
+            <button onClick={handleCount}>Plus</button>
+        </div>
+    )
+}
+
+
 ReactDOM.render(
-    <App/>,
+    <Example/>,
     document.getElementById('root')
 );
 
