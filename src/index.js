@@ -35,7 +35,7 @@ class ItemList extends React.Component {
 
         return (
             <div>
-                {items}
+                {items.slice(0, 20)}
             </div>
         );
     }
@@ -81,8 +81,6 @@ class Emoji extends React.Component {
     }
 
     render() {
-
-
         return (
             <div className="Emoji">
                 <SearchInput onInputChange={this.onInputChange} text={this.state.text}/>
