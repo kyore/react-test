@@ -1,66 +1,99 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import './index.css';
-
 import * as serviceWorker from './serviceWorker';
 
-class CardItem extends React.Component {
-    render() {
-        return (
-            <div className="CardItem">
-                <h3>{this.props.title}</h3>
-                <p>{this.props.body}</p>
-            </div>
-        )
-    }
-}
 
-class Card extends React.Component {
-    render() {
-        const product = this.props.product;
+function Item(props) {
+    const i = props.i;
 
-        return (
-            <div className="Card">
-                <CardItem title={product.title} body={product.body}/>
-            </div>
-        )
-    }
+    return (
+        <div className="Item">
+            <span>{i.symbol}</span>
+            <span>{i.title}</span>
+        </div>
+    )
 }
 
 
-class ListContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: []
-        }
-    }
-
-    componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({products: data})
-            })
-    }
-
+class ItemList extends React.Component {
     render() {
-        let cards = [];
-        this.state.products.forEach(item => {
-            cards.push(<Card product={item} key={item.id}/>)
+        const emojis = this.props.emojis;
+        const text = this.props.text;
+
+        const items = [];
+
+        emojis.forEach(item => {
+            let t = item.title.toLowerCase();
+
+            if (t.indexOf(text.toLowerCase()) === -1) {
+                return;
+            }
+
+            items.push(<Item i={item}/>)
         });
 
         return (
-            <div className="ListContainer">
-                {cards}
+            <div>
+                {items}
             </div>
-        )
+        );
+    }
+}
+
+class SearchInput extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    handleInputChange(e) {
+        this.props.onInputChange(e.target.value)
+    }
+
+    render() {
+        return (
+            <div className="Search">
+                <input type="text" onChange={this.handleInputChange} value={this.props.text}/>
+            </div>
+        );
+    }
+}
+
+class Emoji extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            text: '',
+            emojiList: []
+        };
+
+        this.onInputChange = this.onInputChange.bind(this);
+    }
+
+    onInputChange(value) {
+        this.setState({text: value})
+    }
+
+    componentDidMount() {
+        let emojis = require('./emojiList');
+        this.setState({emojiList: emojis})
+    }
+
+    render() {
+
+
+        return (
+            <div className="Emoji">
+                <SearchInput onInputChange={this.onInputChange} text={this.state.text}/>
+                <ItemList emojis={this.state.emojiList} text={this.state.text}/>
+            </div>
+        );
     }
 }
 
 ReactDOM.render(
-    <ListContainer/>,
+    <Emoji/>,
     document.getElementById('root')
 );
 

@@ -1,24 +1,40 @@
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
+    font: 20px "Century Gothic", Futura, sans-serif;
     margin: 20px;
 }
 
-
-.CardItem {
-    margin: 5px;
-    text-align: center;
-    border: 1px solid rebeccapurple;
-}
-
-.Card {
-    width: 100%;
+.Emoji {
     height: 100%;
-    margin-right: 10px;
-    border: 1px solid blue;
+    display: block;
+    background: #e5e5e5;
+    width: 100%;
+    margin: 20px;
 }
 
-.ListContainer {
-    padding: 30px;
-    width: auto;
-    border: 1px solid red;
+.Search {
+    margin: 10px;
+    width: 100%;
 }
+
+.Search input {
+    height: 40px;
+    width: 100%;
+}
+
+.Item {
+    margin: 5px 10px;
+    background: #ffffff;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    height: 32px;
+    position: relative;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    cursor: pointer;
+}
+
+.Item span {
+    position: relative;
+    top: -8px;
+    margin-left: 20px;
+}
+
