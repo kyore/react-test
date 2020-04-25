@@ -3,12 +3,22 @@ body {
     margin: 20px;
 }
 
-.red {
-    color: red;
+
+.CardItem {
+    margin: 5px;
+    text-align: center;
+    border: 1px solid rebeccapurple;
 }
 
-
-.blue {
-    color: blue;
+.Card {
+    width: 100%;
+    height: 100%;
+    margin-right: 10px;
+    border: 1px solid blue;
 }
 
+.ListContainer {
+    padding: 30px;
+    width: auto;
+    border: 1px solid red;
+}

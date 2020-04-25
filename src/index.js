@@ -1,27 +1,66 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+
+import './index.css';
 
 import * as serviceWorker from './serviceWorker';
 
-
-function Example() {
-    const [count, setCount] = useState(0);
-
-    function handleCount() {
-        setCount(count + 1)
+class CardItem extends React.Component {
+    render() {
+        return (
+            <div className="CardItem">
+                <h3>{this.props.title}</h3>
+                <p>{this.props.body}</p>
+            </div>
+        )
     }
+}
 
-    return (
-        <div>
-            <h6>Count is: {count}</h6>
-            <button onClick={handleCount}>Plus</button>
-        </div>
-    )
+class Card extends React.Component {
+    render() {
+        const product = this.props.product;
+
+        return (
+            <div className="Card">
+                <CardItem title={product.title} body={product.body}/>
+            </div>
+        )
+    }
 }
 
 
+class ListContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            products: []
+        }
+    }
+
+    componentDidMount() {
+        fetch('https://jsonplaceholder.typicode.com/posts')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({products: data})
+            })
+    }
+
+    render() {
+        let cards = [];
+        this.state.products.forEach(item => {
+            cards.push(<Card product={item} key={item.id}/>)
+        });
+
+        return (
+            <div className="ListContainer">
+                {cards}
+            </div>
+        )
+    }
+}
+
 ReactDOM.render(
-    <Example/>,
+    <ListContainer/>,
     document.getElementById('root')
 );
 
