@@ -1,10 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import LoginForm from "../forms/LoginForm";
+import { login } from "../../actions/auth";
 
-const LoginPage = () => {
-  const handleSubmit = (data) => {
-    console.log(data);
-  };
+const LoginPage = (props) => {
+  const handleSubmit = (email, password) =>
+    props.login(email, password).then(() => props.history.push("/"));
 
   return (
     <div>
@@ -14,4 +16,11 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+LoginPage.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  login: PropTypes.func.isRequired,
+};
+
+export default connect(null, { login })(LoginPage);

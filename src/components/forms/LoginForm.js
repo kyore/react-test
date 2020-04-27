@@ -13,6 +13,7 @@ const validate = (email, password) => {
 
 function useFormInput(initialValue) {
   const [value, setValue] = useState(initialValue);
+
   const handleChange = (e) => {
     setValue(e.target.value);
   };
