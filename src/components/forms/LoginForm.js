@@ -4,30 +4,37 @@ import { Form, Button } from "semantic-ui-react";
 import Validator from "validator";
 import InlineError from "../messages/InlineError";
 
-const validate = (data) => {
+const validate = (email, password) => {
   const errs = {};
-  if (!Validator.isEmail(data.email)) errs.email = "Invalid email";
-  if (!data.password) errs.password = "Can't be blank";
+  if (!Validator.isEmail(email)) errs.email = "Invalid email";
+  if (!password) errs.password = "Can't be blank";
   return errs;
 };
 
+function useFormInput(initialValue) {
+  const [value, setValue] = useState(initialValue);
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  return {
+    value,
+    onChange: handleChange,
+  };
+}
+
 function LoginForm(props) {
-  const [data, setData] = useState({ email: "", password: "" });
+  const email = useFormInput("");
+  const password = useFormInput("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const handleInput = (e) => {
-    if (e.target.name === "email") setData({ ...data, email: e.target.value });
-    if (e.target.name === "password")
-      setData({ ...data, password: e.target.value });
-  };
-
   const handleSubmit = () => {
-    const errs = validate(data);
+    const errs = validate(email.value, password.value);
     setErrors(errs);
 
     if (Object.keys(errs).length === 0) {
-      props.submit(data);
+      props.submit(email.value, password.value);
     }
   };
 
@@ -38,11 +45,9 @@ function LoginForm(props) {
           Email
           <input
             type="text"
-            id="email"
-            name="email"
             placeholder="example@example.com"
-            value={data.email}
-            onChange={handleInput}
+            value={email.value}
+            onChange={email.onChange}
           />
         </label>
         {errors.email && <InlineError text={errors.email} />}
@@ -51,12 +56,7 @@ function LoginForm(props) {
       <Form.Field error={!!errors.password}>
         <label htmlFor="password">
           Password
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={handleInput}
-          />
+          <input type="password" onChange={password.onChange} />
         </label>
         {errors.password && <InlineError text={errors.password} />}
       </Form.Field>
