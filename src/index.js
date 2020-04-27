@@ -1,41 +1,20 @@
 import React from "react";
 import * as ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
+import rootReducers from "./reducers";
+import User from "./components/User";
 
-class User extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: "",
-    };
-  }
+const store = createStore(
+  rootReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
-  handleChange = (e) => this.setState({ text: e.target.value });
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  render() {
-    const { text } = this.state;
-
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="name">
-          Name: {text}
-          <input
-            type="text"
-            name="name"
-            id="name"
-            onChange={this.handleChange}
-          />
-        </label>
-
-        <button type="submit">Submit</button>
-      </form>
-    );
-  }
-}
-
-ReactDOM.render(<User />, document.getElementById("root"));
+ReactDOM.render(
+  <Provider store={store}>
+    <User />
+  </Provider>,
+  document.getElementById("root")
+);
 serviceWorker.unregister();
