@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import LoginForm from "../forms/LoginForm";
 import { login } from "../../actions/auth";
 
-
 const LoginPage = (props) => {
   const handleSubmit = (data) =>
     props.login(data).then(() => props.history.push("/"));
+
   return (
     <div>
       <h1>Login page</h1>

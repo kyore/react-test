@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Form, Button } from "semantic-ui-react";
+import { Form, Button, Message } from "semantic-ui-react";
 import Validator from "validator";
 import InlineError from "../messages/InlineError";
 
@@ -37,12 +37,22 @@ function LoginForm(props) {
     setErrors(errs);
 
     if (Object.keys(errs).length === 0) {
-      props.submit(data).catch((err) => setErrors(err.response.data.errors));
+      setLoading(true);
+      props.submit(data).catch((err) => {
+        setErrors(err.response.data.errors);
+        setLoading(false);
+      });
     }
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} loading={loading}>
+      {errors.global && (
+        <Message negative>
+          <Message.Header>Something went wrong!</Message.Header>
+          <p>{errors.global}</p>
+        </Message>
+      )}
       <Form.Field error={!!errors.email}>
         <label htmlFor="email">
           Email
