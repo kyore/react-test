@@ -4,20 +4,18 @@ import { Form, Button } from "semantic-ui-react";
 import Validator from "validator";
 import InlineError from "../messages/InlineError";
 
-const validate = (email, password) => {
+function validate(data) {
   const errs = {};
-  if (!Validator.isEmail(email)) errs.email = "Invalid email";
-  if (!password) errs.password = "Can't be blank";
+  if (!Validator.isEmail(data.email)) errs.email = "Invalid email";
+  if (!data.password) errs.password = "Can't be blank";
   return errs;
-};
+}
 
 function useFormInput(initialValue) {
   const [value, setValue] = useState(initialValue);
-
   const handleChange = (e) => {
     setValue(e.target.value);
   };
-
   return {
     value,
     onChange: handleChange,
@@ -27,15 +25,19 @@ function useFormInput(initialValue) {
 function LoginForm(props) {
   const email = useFormInput("");
   const password = useFormInput("");
+  const data = {
+    email: email.value,
+    password: password.value,
+  };
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
-    const errs = validate(email.value, password.value);
+    const errs = validate(data);
     setErrors(errs);
 
     if (Object.keys(errs).length === 0) {
-      props.submit(email.value, password.value);
+      props.submit(data).catch((err) => setErrors(err.response.data.errors));
     }
   };
 
